@@ -1,0 +1,5 @@
+for x in */*; do echo $x; if [[ $(egrep -rao "import\s+awkward" $x | wc -l) == "0" ]]; then mv $x NO-AWKWARD/$x; fi; done
+
+egrep -ral "import\s+awkward" * > /tmp/files-in-dependents.csv
+
+for x in `cat /tmp/files-in-dependents.csv`; do export y=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\).*/\1/'`; export z=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\)//'`; cd "$y"; echo "$x" >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents.csv; git log -1 --format=%cd "$z" >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents.csv; cd /home/jpivarski/storage/data/dependent-repos-of-awkward; done
