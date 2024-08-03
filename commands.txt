@@ -3,3 +3,9 @@ for x in */*; do echo $x; if [[ $(egrep -rao "import\s+awkward" $x | wc -l) == "
 egrep -ral "import\s+awkward" * > /tmp/files-in-dependents.csv
 
 for x in `cat /tmp/files-in-dependents.csv`; do export y=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\).*/\1/'`; export z=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\)//'`; cd "$y"; echo "$x" >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents.csv; git log --format=%cd "$z" | tail -n1 >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents.csv; cd /home/jpivarski/storage/data/dependent-repos-of-awkward; done
+
+--------------------------------------------------------
+
+egrep -ral "(import\b.*\bawkward|awkward\b.*\bimport)" * --include="*.py" --include="*.ipynb" > /tmp/files-in-dependents-2024.csv
+
+cat /tmp/files-in-dependents-2024.csv | while read x; do export y=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\).*/\1/'`; export z=`echo $x | sed 's/\([^\/]*\/[^\/]*\/\)//'`; cd "$y"; echo "$x" >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents-2024.csv; git log --format=%cd "$z" | tail -n1 >> /home/jpivarski/talks/2023-08-14-awkward-stats-update/files-in-dependents-2024.csv; cd /home/jpivarski/storage/data/dependent-repos-of-awkward-2024; done

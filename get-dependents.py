@@ -22,5 +22,5 @@ while nextExists:
             nextExists = True
             url = u["href"]
 
-for r in result:
-  print(r)
+# for r in result:
+#   print(r)
